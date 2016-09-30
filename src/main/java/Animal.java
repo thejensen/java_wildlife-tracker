@@ -48,7 +48,24 @@ public class Animal {
     }
   }
 
-  blahblah
+  public static Animal find(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM animals WHERE id=:id;";
+      Animal animal = con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetchFirst(Animal.class);
+      return animal;
+    }
+  }
+
+  public void delete() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM animals WHERE id=:id;";
+      con.createQuery(sql)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
 
 
 }

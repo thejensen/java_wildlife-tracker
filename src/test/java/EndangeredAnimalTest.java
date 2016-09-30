@@ -8,6 +8,8 @@ public class EndangeredAnimalTest {
   @Rule
   public DatabaseRule database = new DatabaseRule();
 
+}
+
   // @Test
   // public void endangeredAnimal_instantiatesCorrectly_true() {
   //   EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Kaa", "healthy", "newborn");
@@ -277,12 +279,3 @@ public class EndangeredAnimalTest {
 //     testEndangeredAnimal.delete();
 //     assertEquals(null, EndangeredAnimal.find(testEndangeredAnimal.getId()));
 //   }
-<<<<<<< HEAD
-
-
-}
-=======
-//
-//
-// }
->>>>>>> ed83cfd93a2507a76524fcb0c4e6296032e05d36
