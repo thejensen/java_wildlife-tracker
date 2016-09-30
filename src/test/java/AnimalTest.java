@@ -63,6 +63,13 @@ public class AnimalTest {
     assertEquals(0, Animal.all().size());
   }
 
+  public void update_updatesAnimalNameInDatabase_String() {
+    Animal testAnimal = new Animal("Baloo");
+    testAnimal.save();
+    testAnimal.update("Baloooo");
+    assertEquals("Baloooo", testAnimal.getName());
+  }
+
   // @Test
   // public void getSightings_retrievesAllSightingsFromDatabase_sightingsList() {
   //   Animal testAnimal = new Animal("Baloo");
