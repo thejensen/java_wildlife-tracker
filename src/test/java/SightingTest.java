@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.sql.Timestamp;
 import java.text.DateFormat;
-import java.sql.Date;
-
+import java.util.Date;
 
 public class SightingTest {
 
@@ -53,6 +52,7 @@ public class SightingTest {
     assertEquals(true, Sighting.all().get(0).equals(testSighting));
     assertEquals(true, Sighting.all().get(1).equals(secondTestSighting));
   }
+
   @Test
   public void find_returnsSightingWithSameId_secondSighting() {
     Animal testAnimal = new Animal("Bagheera");
@@ -74,7 +74,7 @@ public class SightingTest {
     testSighting.save();
     Timestamp savedSightingTime = Sighting.find(testSighting.getId()).getTimeSighted();
     Timestamp rightNow = new Timestamp(new Date().getTime());
-    assertEquals(rightNow, savedSightingTime);
+    assertEquals(DateFormat.getDateTimeInstance().format(rightNow), DateFormat.getDateTimeInstance().format(savedSightingTime));
   }
 
   // @Test

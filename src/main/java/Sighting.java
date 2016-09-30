@@ -5,18 +5,18 @@ import java.util.Arrays;
 import java.sql.Timestamp;
 
 public class Sighting {
-  private int animalId;
+  private int animal_id;
   private boolean endangered;
-  private String latLong;
-  private String rangerName;
+  private String lat_long;
+  private String ranger_name;
   private int id;
-  private Timestamp timeSighted;
+  private Timestamp time_sighted;
 
-  public Sighting(int animalId, boolean endangered, String latLong, String rangerName) {
-    this.animalId = animalId;
+  public Sighting(int animal_id, boolean endangered, String lat_long, String ranger_name) {
+    this.animal_id = animal_id;
     this.endangered = endangered;
-    this.latLong = latLong;
-    this.rangerName = rangerName;
+    this.lat_long = lat_long;
+    this.ranger_name = ranger_name;
     this.id = id;
   }
 
@@ -25,7 +25,7 @@ public class Sighting {
   }
 
   public int getAnimalId() {
-    return animalId;
+    return animal_id;
   }
 
   public boolean isEndangered() {
@@ -33,15 +33,15 @@ public class Sighting {
   }
 
   public String getLatLong() {
-    return latLong;
+    return lat_long;
   }
 
   public String getRangerName() {
-    return rangerName;
+    return ranger_name;
   }
 
   public Timestamp getTimeSighted() {
-    return timeSighted;
+    return time_sighted;
   }
 
   @Override
@@ -58,10 +58,10 @@ public class Sighting {
     try(Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO sightings (animal_id, endangered, lat_long, ranger_name, time_sighted) VALUES (:animal_id, :endangered, :lat_long, :ranger_name, now());";
       this.id = (int) con.createQuery(sql, true)
-        .addParameter("animal_id", this.animalId)
+        .addParameter("animal_id", this.animal_id)
         .addParameter("endangered", this.endangered)
-        .addParameter("lat_long", this.latLong)
-        .addParameter("ranger_name", this.rangerName)
+        .addParameter("lat_long", this.lat_long)
+        .addParameter("ranger_name", this.ranger_name)
         .executeUpdate()
         .getKey();
     }
