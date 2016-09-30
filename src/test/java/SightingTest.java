@@ -15,39 +15,39 @@ public class SightingTest {
 
   @Test
   public void sighting_instantiatesCorrectly_true() {
-    Animal testAnimal = new Animal("Bagheera");
+    Animal testAnimal = new Animal("Bagheera", true);
     testAnimal.save();
-    Sighting testSighting = new Sighting(testAnimal.getId(), true, "45.523062, -122.676482", "Ranger Jen");
+    Sighting testSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
     assertEquals(true, testSighting instanceof Sighting);
   }
 
   @Test
   public void equals_returnsTrueIfLocationAndDescriptionAreSame_true() {
-    Animal testAnimal = new Animal("Bagheera");
+    Animal testAnimal = new Animal("Bagheera", true);
     testAnimal.save();
-    Sighting testSighting = new Sighting(testAnimal.getId(), true, "45.523062, -122.676482", "Ranger Jen");
-    Sighting anotherSighting = new Sighting(testAnimal.getId(), true, "45.523062, -122.676482", "Ranger Jen");
+    Sighting testSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
+    Sighting anotherSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
     assertTrue(testSighting.equals(anotherSighting));
   }
 
   @Test
   public void save_insertsObjectIntoDatabase_Sighting() {
-    Animal testAnimal = new Animal("Bagheera");
+    Animal testAnimal = new Animal("Bagheera", true);
     testAnimal.save();
-    Sighting testSighting = new Sighting (testAnimal.getId(), true, "45.523062, -122.676482", "Ranger Jen");
+    Sighting testSighting = new Sighting (testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
     testSighting.save();
     assertEquals(true, Sighting.all().get(0).equals(testSighting));
   }
 
   @Test
   public void all_returnsAllInstancesOfSighting_true() {
-    Animal testAnimal = new Animal("Bagheera");
+    Animal testAnimal = new Animal("Bagheera", true);
     testAnimal.save();
-    Sighting testSighting = new Sighting (testAnimal.getId(), true, "45.523062, -122.676482", "Ranger Jen");
+    Sighting testSighting = new Sighting (testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
     testSighting.save();
-    Animal secondTestAnimal = new Animal("King Louie");
+    Animal secondTestAnimal = new Animal("King Louie", false);
     secondTestAnimal.save();
-    Sighting secondTestSighting = new Sighting (testAnimal.getId(), false, "45.523062, -122.676482", "Ranger Ashanti");
+    Sighting secondTestSighting = new Sighting (testAnimal.getId(), "45.523062, -122.676482", "Ranger Ashanti");
     secondTestSighting.save();
     assertEquals(true, Sighting.all().get(0).equals(testSighting));
     assertEquals(true, Sighting.all().get(1).equals(secondTestSighting));
@@ -55,27 +55,29 @@ public class SightingTest {
 
   @Test
   public void find_returnsSightingWithSameId_secondSighting() {
-    Animal testAnimal = new Animal("Bagheera");
+    Animal testAnimal = new Animal("Bagheera", true);
     testAnimal.save();
-    Sighting testSighting = new Sighting (testAnimal.getId(), true, "45.523062, -122.676482", "Ranger Jen");
+    Sighting testSighting = new Sighting (testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
     testSighting.save();
-    Animal secondTestAnimal = new Animal("King Louie");
+    Animal secondTestAnimal = new Animal("King Louie", false);
     secondTestAnimal.save();
-    Sighting secondTestSighting = new Sighting (testAnimal.getId(), false, "45.523062, -122.676482", "Ranger Ashanti");
+    Sighting secondTestSighting = new Sighting (testAnimal.getId(), "45.523062, -122.676482", "Ranger Ashanti");
     secondTestSighting.save();
     assertEquals(Sighting.find(secondTestSighting.getId()), secondTestSighting);
   }
 
   @Test
   public void save_recordsTimeOfCreationInDatabase() {
-    Animal testAnimal = new Animal("Bagheera");
+    Animal testAnimal = new Animal("Bagheera", true);
     testAnimal.save();
-    Sighting testSighting = new Sighting (testAnimal.getId(), true, "45.523062, -122.676482", "Ranger Jen");
+    Sighting testSighting = new Sighting (testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
     testSighting.save();
     Timestamp savedSightingTime = Sighting.find(testSighting.getId()).getTimeSighted();
     Timestamp rightNow = new Timestamp(new Date().getTime());
     assertEquals(DateFormat.getDateTimeInstance().format(rightNow), DateFormat.getDateTimeInstance().format(savedSightingTime));
   }
+
+
 
   // @Test
   // public void addPerson_addsPersonToSighting() {
@@ -90,9 +92,9 @@ public class SightingTest {
   //
   // @Test
   // public void getPersons_returnsAllPersons_List() {
-  //   Animal testAnimal = new Animal("Bagheera");
+  //   Animal testAnimal = new Animal("Bagheera", true);
   //   testAnimal.save();
-  //   Sighting testSighting = new Sighting testSighting = new Sighting(testAnimal.getId(), true, "45.523062, -122.676482", "Ranger Jen");
+  //   Sighting testSighting = new Sighting testSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
   //   Person testPerson = new Person("Henry", "henry@henry.com");
   //   testPerson.save();
   //   testSighting.addPerson(testPerson);
@@ -102,18 +104,18 @@ public class SightingTest {
   //
   // @Test
   // public void delete_deletesSighting_true() {
-  //   Animal testAnimal = new Animal("Bagheera")
+  //   Animal testAnimal = new Animal("Bagheera", true)
   //   testAnimal.save();
-  //   Sighting testSighting = new Sighting testSighting = new Sighting(testAnimal.getId(), true, "45.523062, -122.676482", "Ranger Jen");
+  //   Sighting testSighting = new Sighting testSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
   //   testSighting.delete();
   //   assertEquals(0, Sighting.all().size());
   // }
   //
   // @Test
   // public void delete_deletesAllPersonsAndCommunitiesAssociations() {
-  //   Animal testAnimal = new Animal("Bagheera")
+  //   Animal testAnimal = new Animal("Bagheera", true)
   //   testAnimal.save();
-  //   Sighting testSighting = new Sighting testSighting = new Sighting(testAnimal.getId(), true, "45.523062, -122.676482", "Ranger Jen");
+  //   Sighting testSighting = new Sighting testSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
   //   Person testPerson = new Person("Henry", "henry@henry.com");
   //   testPerson.save();
   //   testSighting.addPerson(testPerson);
@@ -123,9 +125,9 @@ public class SightingTest {
   //
   // @Test
   // public void removePerson_removesAssociationWithSpecifiedSighting() {
-  //   Animal testAnimal = new Animal("Bagheera")
+  //   Animal testAnimal = new Animal("Bagheera", true)
   //   testAnimal.save();
-  //   Sighting testSighting = new Sighting testSighting = new Sighting(testAnimal.getId(), true, "45.523062, -122.676482", "Ranger Jen");
+  //   Sighting testSighting = new Sighting testSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
   //   Person testPerson = new Person("Henry", "henry@henry.com");
   //   testPerson.save();
   //   testSighting.removePerson(testPerson);

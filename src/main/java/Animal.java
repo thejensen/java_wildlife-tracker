@@ -6,14 +6,21 @@ public class Animal {
 
   private String name;
   private int id;
+  private boolean endangered;
 
-  public Animal(String name) {
+
+  public Animal(String name, boolean endangered) {
     this.name = name;
     this.id = id;
+    this.endangered = endangered;
   }
 
   public String getName() {
     return name;
+  }
+
+  public boolean isEndangered() {
+    return endangered;
   }
 
   public int getId() {
@@ -26,15 +33,16 @@ public class Animal {
       return false;
     } else {
       Animal newAnimal = (Animal) otherAnimal;
-      return this.getName().equals(newAnimal.getName());
+      return this.getName().equals(newAnimal.getName()) && this.isEndangered() == (newAnimal.isEndangered());
     }
   }
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO animals (name) VALUES (:name);";
+      String sql = "INSERT INTO animals (name, endangered) VALUES (:name, :endangered);";
       this.id = (int) con.createQuery(sql, true)
         .addParameter("name", this.name)
+        .addParameter("endangered", this.endangered)
         .executeUpdate()
         .getKey();
     }
@@ -67,12 +75,22 @@ public class Animal {
     }
   }
 
-  public void update(String name) {
+  public void updateName(String name) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE animals SET name=:name WHERE id=:id;";
       con.createQuery(sql)
         .addParameter("id", id)
         .addParameter("name", name)
+        .executeUpdate();
+    }
+  }
+
+  public void updateEndangerment(boolean endangered) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE sightings SET endangered=:endangered WHERE id=:id;";
+      con.createQuery(sql)
+        .addParameter("id", id)
+        .addParameter("endangered", endangered)
         .executeUpdate();
     }
   }

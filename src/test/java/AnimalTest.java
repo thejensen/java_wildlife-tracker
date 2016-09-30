@@ -11,26 +11,26 @@ public class AnimalTest {
 
   @Test
   public void animal_instantiatesCorrectly_true() {
-    Animal testAnimal = new Animal("Baloo");
+    Animal testAnimal = new Animal("Baloo", true);
     assertEquals(true, testAnimal instanceof Animal);
   }
 
   @Test
   public void getName_animalInstantiatesWithName_Baloo() {
-    Animal testAnimal = new Animal("Baloo");
+    Animal testAnimal = new Animal("Baloo", true);
     assertEquals("Baloo", testAnimal.getName());
   }
 
   @Test
   public void equals_returnsTrueIfNameIsTheSame_true() {
-    Animal firstAnimal = new Animal("Baloo");
-    Animal anotherAnimal = new Animal("Baloo");
+    Animal firstAnimal = new Animal("Baloo", true);
+    Animal anotherAnimal = new Animal("Baloo", true);
     assertTrue(firstAnimal.equals(anotherAnimal));
   }
 
   @Test
   public void save_assignsIdToObjectAndSavesObjectToDatabase() {
-    Animal testAnimal = new Animal("Baloo");
+    Animal testAnimal = new Animal("Baloo", true);
     testAnimal.save();
     Animal savedAnimal = Animal.all().get(0);
     assertEquals(testAnimal.getId(), savedAnimal.getId());
@@ -38,9 +38,9 @@ public class AnimalTest {
 
   @Test
   public void all_returnsAllInstancesOfAnimal_true() {
-    Animal firstAnimal = new Animal("Baloo");
+    Animal firstAnimal = new Animal("Baloo", true);
     firstAnimal.save();
-    Animal secondAnimal = new Animal("Shere Khan");
+    Animal secondAnimal = new Animal("Shere Khan", false);
     secondAnimal.save();
     assertEquals(true, Animal.all().get(0).equals(firstAnimal));
     assertEquals(true, Animal.all().get(1).equals(secondAnimal));
@@ -48,31 +48,38 @@ public class AnimalTest {
 
   @Test
   public void find_returnsAnimalWithSameId_secondAnimal() {
-    Animal firstAnimal = new Animal("Baloo");
+    Animal firstAnimal = new Animal("Baloo", true);
     firstAnimal.save();
-    Animal secondAnimal = new Animal("Shere Khan");
+    Animal secondAnimal = new Animal("Shere Khan", false);
     secondAnimal.save();
     assertEquals(Animal.find(secondAnimal.getId()), secondAnimal);
   }
 
   @Test
   public void delete_deletesAnimalFromDatabase_0() {
-    Animal testAnimal = new Animal("Baloo");
+    Animal testAnimal = new Animal("Baloo", true);
     testAnimal.save();
     testAnimal.delete();
     assertEquals(0, Animal.all().size());
   }
 
-  public void update_updatesAnimalNameInDatabase_String() {
-    Animal testAnimal = new Animal("Baloo");
+  public void updateName_updatesAnimalNameInDatabase_String() {
+    Animal testAnimal = new Animal("Baloo", true);
     testAnimal.save();
-    testAnimal.update("Baloooo");
+    testAnimal.updateName("Baloooo");
+    assertEquals("Baloooo", testAnimal.getName());
+  }
+
+  public void updateEndangerment_updatesAnimalEndangermentInDatabase_String() {
+    Animal testAnimal = new Animal("Baloo", true);
+    testAnimal.save();
+    testAnimal.updateEndangerment(false);
     assertEquals("Baloooo", testAnimal.getName());
   }
 
   // @Test
   // public void getSightings_retrievesAllSightingsFromDatabase_sightingsList() {
-  //   Animal testAnimal = new Animal("Baloo");
+  //   Animal testAnimal = new Animal("Baloo", true);
   //   testAnimal.save();
   //   Sighting testSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
   //   testSighting.save();
@@ -86,7 +93,7 @@ public class AnimalTest {
   // public void delete_deletesAllAnimalsAndSightingAssoc() {
   //   Sighting testSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
   //   testSighting.save();
-  //   Animal testAnimal = new Animal("Baloo");
+  //   Animal testAnimal = new Animal("Baloo", true);
   //   testAnimal.save();
   //   testSighting.addAnimal(testAnimal);
   //   testAnimal.delete();
