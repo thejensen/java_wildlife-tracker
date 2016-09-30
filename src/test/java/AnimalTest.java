@@ -77,17 +77,17 @@ public class AnimalTest {
     assertEquals("Baloooo", testAnimal.getName());
   }
 
-  // @Test
-  // public void getSightings_retrievesAllSightingsFromDatabase_sightingsList() {
-  //   Animal testAnimal = new Animal("Baloo", true);
-  //   testAnimal.save();
-  //   Sighting testSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
-  //   testSighting.save();
-  //   Sighting secondTestSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
-  //   secondTestSighting.save();
-  //   Object[] sightings = new Object[] { firstSighting, secondSighting };
-  //   assertTrue(testAnimal.getSightings().containsAll(Arrays.asList(sightings)));
-  // }
+  @Test
+  public void getAnimalSpecificSightings_retrievesAllSightingsFromDatabase_sightingsList() {
+    Animal testAnimal = new Animal("Baloo", true);
+    testAnimal.save();
+    Sighting testSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
+    testSighting.save();
+    Sighting secondTestSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
+    secondTestSighting.save();
+    Object[] sightings = new Object[] { testSighting, secondTestSighting };
+    assertTrue(testAnimal.getAnimalSpecificSightings().containsAll(Arrays.asList(sightings)));
+  }
 
   // @Test
   // public void delete_deletesAllAnimalsAndSightingAssoc() {
