@@ -47,6 +47,32 @@ public class AnimalTest {
   }
 
   // @Test
+  // public void equals_returnsTrueIfNameIsTheSame_true() {
+  //   Animal firstAnimal = new Animal("Baloo");
+  //   Animal anotherAnimal = new Animal("Baloo");
+  //   assertTrue(firstAnimal.equals(anotherAnimal));
+  // }
+  //
+  // @Test
+  // public void save_assignsIdToObject() {
+  //   Animal testAnimal = new Animal("Baloo");
+  //   testAnimal.save();
+  //   Animal savedAnimal = Animal.all().get(0);
+  //   assertEquals(testAnimal.getId(), savedAnimal.getId());
+  // }
+  //
+  // @Test
+  // public void all_returnsAllInstancesOfAnimal_true() {
+  //   Animal firstAnimal = new Animal("Baloo");
+  //   firstAnimal.save();
+  //   Animal secondAnimal = new Animal("Shere Khan");
+  //   secondAnimal.save();
+  //   assertEquals(true, Animal.all().get(0).equals(firstAnimal));
+  //   assertEquals(true, Animal.all().get(1).equals(secondAnimal));
+  // }
+  //
+
+  // @Test
   // public void find_returnsAnimalWithSameId_secondAnimal() {
   //   Animal firstAnimal = new Animal("Baloo");
   //   firstAnimal.save();

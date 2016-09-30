@@ -277,6 +277,12 @@ public class EndangeredAnimalTest {
 //     testEndangeredAnimal.delete();
 //     assertEquals(null, EndangeredAnimal.find(testEndangeredAnimal.getId()));
 //   }
+<<<<<<< HEAD
 
 
 }
+=======
+//
+//
+// }
+>>>>>>> ed83cfd93a2507a76524fcb0c4e6296032e05d36
