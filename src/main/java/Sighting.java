@@ -44,7 +44,7 @@ public class Sighting {
       return false;
     } else {
       Sighting newSighting = (Sighting) otherSighting;
-      return this.getAnimalId() == (newSighting.getAnimalId()) && this.getLatLong().equals(newSighting.getLatLong()) && this.getRangerName().equals(newSighting.getRangerName()) ;
+      return this.getAnimalId() == (newSighting.getAnimalId()) && this.getLatLong().equals(newSighting.getLatLong()) && this.getRangerName().equals(newSighting.getRangerName());
     }
   }
 
@@ -77,10 +77,4 @@ public class Sighting {
       return sighting;
     }
   }
-
-
-
-
-
-
 }
