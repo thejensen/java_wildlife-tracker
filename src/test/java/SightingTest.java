@@ -77,6 +77,10 @@ public class SightingTest {
     assertEquals(DateFormat.getDateTimeInstance().format(rightNow), DateFormat.getDateTimeInstance().format(savedSightingTime));
   }
 
+  @Test
+  public void find_returnsNullWhenNoAnimalFound_null() {
+    assertTrue(Animal.find(999) == null);
+  }
 
 
 }

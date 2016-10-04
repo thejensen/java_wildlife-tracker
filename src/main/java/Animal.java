@@ -64,8 +64,11 @@ public class Animal {
         .throwOnMappingFailure(false)
         .executeAndFetchFirst(Animal.class);
       return animal;
+    } catch (IndexOutOfBoundsException exception) {
+      return null;
     }
   }
+
 
   public void delete() {
     try(Connection con = DB.sql2o.open()) {

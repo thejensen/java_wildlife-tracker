@@ -41,12 +41,25 @@ public class EndangeredAnimal extends Animal {
     }
   }
 
-  public static List<EndangeredAnimal> allEndangeredAnimals() {
+  public static List<EndangeredAnimal> getEndangeredAnimals() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM animals WHERE endangered=true;";
       return con.createQuery(sql)
         .throwOnMappingFailure(false)
         .executeAndFetch(EndangeredAnimal.class);
+    }
+  }
+
+  public static Animal findEndangeredAnimal(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM animals WHERE id=:id;";
+      Animal animal = con.createQuery(sql)
+        .addParameter("id", id)
+        .throwOnMappingFailure(false)
+        .executeAndFetchFirst(EndangeredAnimal.class);
+      return animal;
+    } catch (IndexOutOfBoundsException exception) {
+      return null;
     }
   }
 

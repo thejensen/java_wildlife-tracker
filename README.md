@@ -11,7 +11,7 @@ As a ranger, I do not want to submit an incomplete form in error.
 As a ranger, I want to see a list of sightings of only endangered animals.
 
 How to recreate database:
-1)
+1) CREATE DATABASE wildlife_tracker
 2)
 
 

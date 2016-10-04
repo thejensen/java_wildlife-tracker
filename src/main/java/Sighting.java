@@ -77,6 +77,8 @@ public class Sighting {
         .addParameter("id", id)
         .executeAndFetchFirst(Sighting.class);
       return sighting;
+    } catch (IndexOutOfBoundsException exception) {
+      return null;
     }
   }
 }

@@ -89,6 +89,11 @@ public class AnimalTest {
     assertTrue(testAnimal.getSpeciesSpecificSightings().containsAll(Arrays.asList(sightings)));
   }
 
+  @Test
+  public void find_returnsNullWhenNoAnimalFound_null() {
+    assertTrue(Animal.find(999) == null);
+  }
+
   // @Test
   // public void delete_deletesAllAnimalsAndSightingAssoc() {
   //  Sighting testSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
