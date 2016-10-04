@@ -14,4 +14,17 @@ public class EndangeredAnimalTest {
     EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Mogwai", true, "healthy", "young");
     assertEquals(true, testEndangeredAnimal instanceof EndangeredAnimal);
   }
+
+  @Test
+  public void save_assignsIdToObjectAndSavesObjectToDatabase() {
+    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Mogwai", true, "healthy", "young");
+    testEndangeredAnimal.save();
+    EndangeredAnimal savedEndangeredAnimal = EndangeredAnimal.allEndangeredAnimals().get(0);
+    assertEquals(testEndangeredAnimal.getId(), savedEndangeredAnimal.getId());
+  }
+
+
+
+
+
 }

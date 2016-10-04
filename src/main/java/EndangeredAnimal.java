@@ -1,3 +1,7 @@
+import org.sql2o.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class EndangeredAnimal extends Animal {
   private String health;
   private String age;
@@ -22,4 +26,29 @@ public class EndangeredAnimal extends Animal {
   public String getAge() {
     return age;
   }
+
+  @Override
+  public void save() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO animals (name, endangered, health, age) VALUES (:name, :endangered, :health, :age);";
+      this.id = (int) con.createQuery(sql, true)
+        .addParameter("name", this.name)
+        .addParameter("endangered", this.endangered)
+        .addParameter("health", this.health)
+        .addParameter("age", this.age)
+        .executeUpdate()
+        .getKey();
+    }
+  }
+
+  public static List<EndangeredAnimal> allEndangeredAnimals() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM animals WHERE endangered=true;";
+      return con.createQuery(sql)
+        .throwOnMappingFailure(false)
+        .executeAndFetch(EndangeredAnimal.class);
+    }
+  }
+
+
 }

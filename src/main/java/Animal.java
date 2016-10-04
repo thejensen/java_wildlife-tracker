@@ -3,11 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Animal {
-
-  private String name;
-  private int id;
-  private boolean endangered;
-
+  public String name;
+  public int id;
+  public boolean endangered;
 
   public Animal(String name, boolean endangered) {
     this.name = name;
@@ -43,6 +41,7 @@ public class Animal {
       this.id = (int) con.createQuery(sql, true)
         .addParameter("name", this.name)
         .addParameter("endangered", this.endangered)
+        .throwOnMappingFailure(false)
         .executeUpdate()
         .getKey();
     }
@@ -52,6 +51,7 @@ public class Animal {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM animals;";
       return con.createQuery(sql)
+        .throwOnMappingFailure(false)
         .executeAndFetch(Animal.class);
     }
   }
@@ -61,6 +61,7 @@ public class Animal {
       String sql = "SELECT * FROM animals WHERE id=:id;";
       Animal animal = con.createQuery(sql)
         .addParameter("id", id)
+        .throwOnMappingFailure(false)
         .executeAndFetchFirst(Animal.class);
       return animal;
     }
@@ -71,6 +72,7 @@ public class Animal {
       String sql = "DELETE FROM animals WHERE id=:id;";
       con.createQuery(sql)
         .addParameter("id", id)
+        .throwOnMappingFailure(false)
         .executeUpdate();
     }
   }

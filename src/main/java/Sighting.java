@@ -55,6 +55,7 @@ public class Sighting {
         .addParameter("animal_id", this.animal_id)
         .addParameter("lat_long", this.lat_long)
         .addParameter("ranger_name", this.ranger_name)
+        .throwOnMappingFailure(false)
         .executeUpdate()
         .getKey();
     }
@@ -64,6 +65,7 @@ public class Sighting {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM sightings;";
       return con.createQuery(sql)
+        .throwOnMappingFailure(false)
         .executeAndFetch(Sighting.class);
     }
   }
