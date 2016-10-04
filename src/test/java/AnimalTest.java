@@ -78,7 +78,7 @@ public class AnimalTest {
   }
 
   @Test
-  public void getAnimalSpecificSightings_retrievesAllSightingsFromDatabase_sightingsList() {
+  public void getSpeciesSpecificSightings_retrievesAllSightingsFromDatabaseWithAnimalId_sightingsList() {
     Animal testAnimal = new Animal("Baloo", true);
     testAnimal.save();
     Sighting testSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
@@ -86,12 +86,12 @@ public class AnimalTest {
     Sighting secondTestSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
     secondTestSighting.save();
     Object[] sightings = new Object[] { testSighting, secondTestSighting };
-    assertTrue(testAnimal.getAnimalSpecificSightings().containsAll(Arrays.asList(sightings)));
+    assertTrue(testAnimal.getSpeciesSpecificSightings().containsAll(Arrays.asList(sightings)));
   }
 
   // @Test
   // public void delete_deletesAllAnimalsAndSightingAssoc() {
-  //   Sighting testSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
+  //  Sighting testSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
   //   testSighting.save();
   //   Animal testAnimal = new Animal("Baloo", true);
   //   testAnimal.save();
