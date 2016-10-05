@@ -7,10 +7,10 @@ public class Animal {
   public int id;
   public boolean endangered;
 
-  public Animal(String name, boolean endangered) {
+  public Animal(String name) {
     this.name = name;
     this.id = id;
-    this.endangered = endangered;
+    endangered = false;
   }
 
   public String getName() {
@@ -69,17 +69,6 @@ public class Animal {
     }
   }
 
-
-  public void delete() {
-    try(Connection con = DB.sql2o.open()) {
-      String sql = "DELETE FROM animals WHERE id=:id;";
-      con.createQuery(sql)
-        .addParameter("id", id)
-        .throwOnMappingFailure(false)
-        .executeUpdate();
-    }
-  }
-
   public void updateName(String name) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE animals SET name=:name WHERE id=:id;";
@@ -90,12 +79,12 @@ public class Animal {
     }
   }
 
-  public void updateEndangerment(boolean endangered) {
+  public void delete() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "UPDATE sightings SET endangered=:endangered WHERE id=:id;";
+      String sql = "DELETE FROM animals WHERE id=:id;";
       con.createQuery(sql)
         .addParameter("id", id)
-        .addParameter("endangered", endangered)
+        .throwOnMappingFailure(false)
         .executeUpdate();
     }
   }
@@ -109,11 +98,5 @@ public class Animal {
       return sightings;
     }
   }
-
-
-
-
-
-
 
 }

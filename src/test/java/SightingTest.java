@@ -15,7 +15,7 @@ public class SightingTest {
 
   @Test
   public void sighting_instantiatesCorrectly_true() {
-    Animal testAnimal = new Animal("Bagheera", true);
+    Animal testAnimal = new Animal("Bagheera");
     testAnimal.save();
     Sighting testSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
     assertEquals(true, testSighting instanceof Sighting);
@@ -23,7 +23,7 @@ public class SightingTest {
 
   @Test
   public void equals_returnsTrueIfLocationAndDescriptionAreSame_true() {
-    Animal testAnimal = new Animal("Bagheera", true);
+    Animal testAnimal = new Animal("Bagheera");
     testAnimal.save();
     Sighting testSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
     Sighting anotherSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
@@ -32,7 +32,7 @@ public class SightingTest {
 
   @Test
   public void save_insertsObjectIntoDatabase_Sighting() {
-    Animal testAnimal = new Animal("Bagheera", true);
+    Animal testAnimal = new Animal("Bagheera");
     testAnimal.save();
     Sighting testSighting = new Sighting (testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
     testSighting.save();
@@ -41,11 +41,11 @@ public class SightingTest {
 
   @Test
   public void all_returnsAllInstancesOfSighting_true() {
-    Animal testAnimal = new Animal("Bagheera", true);
+    Animal testAnimal = new Animal("Bagheera");
     testAnimal.save();
     Sighting testSighting = new Sighting (testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
     testSighting.save();
-    Animal secondTestAnimal = new Animal("King Louie", false);
+    Animal secondTestAnimal = new Animal("King Louie");
     secondTestAnimal.save();
     Sighting secondTestSighting = new Sighting (testAnimal.getId(), "45.523062, -122.676482", "Ranger Ashanti");
     secondTestSighting.save();
@@ -55,11 +55,11 @@ public class SightingTest {
 
   @Test
   public void find_returnsSightingWithSameId_secondSighting() {
-    Animal testAnimal = new Animal("Bagheera", true);
+    Animal testAnimal = new Animal("Bagheera");
     testAnimal.save();
     Sighting testSighting = new Sighting (testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
     testSighting.save();
-    Animal secondTestAnimal = new Animal("King Louie", false);
+    Animal secondTestAnimal = new Animal("King Louie");
     secondTestAnimal.save();
     Sighting secondTestSighting = new Sighting (testAnimal.getId(), "45.523062, -122.676482", "Ranger Ashanti");
     secondTestSighting.save();
@@ -68,7 +68,7 @@ public class SightingTest {
 
   @Test
   public void save_recordsTimeOfCreationInDatabase() {
-    Animal testAnimal = new Animal("Bagheera", true);
+    Animal testAnimal = new Animal("Bagheera");
     testAnimal.save();
     Sighting testSighting = new Sighting (testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
     testSighting.save();
@@ -81,6 +81,5 @@ public class SightingTest {
   public void find_returnsNullWhenNoAnimalFound_null() {
     assertTrue(Animal.find(999) == null);
   }
-
 
 }

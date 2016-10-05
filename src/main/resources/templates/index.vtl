@@ -1,0 +1,33 @@
+#if($success-add)
+  <div class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    $success-add's details have been added. Keep up the good work.
+  </div>
+#end
+
+<h3><a href="/animal/new">Add New Animal To Report a Sighting</a></h3>
+
+<h1>Recent Endangered Animal Sightings</h1>
+#foreach ($endangeredAnimal in $endangeredAnimals)
+  <div class="col-xs-6 col-md-3">
+    <a href="/animal/$endangeredAnimal.getId()" class="thumbnail">
+      <h4>$endangeredAnimal.getName()</h4>
+      <h4>$endangeredAnimal.getSpeciesSpecificSightings()()</h4>
+    </a>
+  </div>
+#end
+
+<h1>Local Wildlife</h1>
+<h3>Click an animal to report a sighting:</h3>
+<hr>
+<div class="row">
+  #foreach ($animal in $animals)
+    <div class="col-xs-6 col-md-3">
+      <a href="/animal/$animal.getId()/sighting/new" class="thumbnail">
+        <h4>$animal.getName()</h4>
+      </a>
+    </div>
+  #end
+</div>
+
+<hr>

@@ -9,12 +9,13 @@ public class EndangeredAnimal extends Animal {
   public static final String POOR_HEALTH = "ill";
   public static final String OK_HEALTH = "ok";
   public static final String GOOD_HEALTH = "healthy";
-  public static final String NEWBORN = "newbord";
+  public static final String NEWBORN = "newborn";
   public static final String YOUNG = "young";
   public static final String ADULT = "adult";
 
-  public EndangeredAnimal(String name, boolean endangered, String health, String age) {
-    super(name, endangered);
+  public EndangeredAnimal(String name, String health, String age) {
+    super(name);
+    endangered = true;
     this.health = health;
     this.age = age;
   }
@@ -50,16 +51,36 @@ public class EndangeredAnimal extends Animal {
     }
   }
 
-  public static Animal findEndangeredAnimal(int id) {
+  public static EndangeredAnimal findEndangeredAnimal(int id) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM animals WHERE id=:id;";
-      Animal animal = con.createQuery(sql)
+      EndangeredAnimal endangeredanimal = con.createQuery(sql)
         .addParameter("id", id)
         .throwOnMappingFailure(false)
         .executeAndFetchFirst(EndangeredAnimal.class);
-      return animal;
+      return endangeredanimal;
     } catch (IndexOutOfBoundsException exception) {
       return null;
+    }
+  }
+
+  public void updateHealth(String health) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE animals SET health=:health WHERE id=:id;";
+      con.createQuery(sql)
+        .addParameter("id", id)
+        .addParameter("health", health)
+        .executeUpdate();
+    }
+  }
+
+  public void updateAge(String age) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE animals SET age=:age WHERE id=:id;";
+      con.createQuery(sql)
+        .addParameter("id", id)
+        .addParameter("age", age)
+        .executeUpdate();
     }
   }
 

@@ -81,4 +81,18 @@ public class Sighting {
       return null;
     }
   }
+
+  // public static List<Sighting> getEndangeredAnimalSightings() {
+  //   try(Connection con = DB.sql2o.open()) {
+  //     String sql = "SELECT * FROM sightings WHERE animal_id=:id AND endangered=true;";
+  //     Animal animal = con.createQuery(sql)
+  //       .addParameter("id", id)
+  //       .throwOnMappingFailure(false)
+  //       .executeAndFetchFirst(Sighting.class);
+  //     return animal;
+  //   } catch (IndexOutOfBoundsException exception) {
+  //     return null;
+  //   }
+  // }
+  
 }
