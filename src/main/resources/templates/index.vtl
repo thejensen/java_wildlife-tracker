@@ -16,18 +16,25 @@
     </a>
   </div>
 #end
-
-<h1>Local Wildlife</h1>
-<h3>Click an animal to report a sighting:</h3>
 <hr>
-<div class="row">
-  #foreach ($animal in $animals)
-    <div class="col-xs-6 col-md-3">
-      <a href="/animal/$animal.getId()/sighting/new" class="thumbnail">
-        <h4>$animal.getName()</h4>
-      </a>
-    </div>
-  #end
-</div>
+
+<h1>Report a Sighting</h1>
+<form action="/" method="post">
+  <label for="animal">Select Animal Sighted</label>
+  <select class="form-control" name="health">
+    #foreach($animal in $animals)
+      <option>$animal</option>
+    #end
+  </select>
+  <p>Unique animal sighting? <a href="/animal/new">Add Animal to Database.</a></p>
+  <br>
+  <label for="latLong">Latitute and Longitude Coordinates</label>
+  <input type="text" name="latLong">
+  <br>
+  <label for="rangerName">Appearance of Health</label>
+  <input type="text" name="rangerName">
+  <br>
+  <button type="submit" class="btn btn-primary">Add Animal</button>
+</form>
 
 <hr>

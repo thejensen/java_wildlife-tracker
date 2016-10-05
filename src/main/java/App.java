@@ -12,6 +12,7 @@ public class App {
     staticFileLocation("/public");
     String layout = "templates/layout.vtl";
 
+    // Homepage, index.vtl. Info posts from /animal/new
     get("/", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("animals", Animal.all());
@@ -22,29 +23,43 @@ public class App {
 
 // -----------------------------------------------------------------------------------------------
 
-    //posts from /animal/new/
+    // Post request for Homepage, Info posts from /animal/new, also posts from Homepage form.
     post("/", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
-      String name = request.queryParams("name");
 
+      // instantiate Animal with form inputs for the superclass constructor.
+      String name = request.queryParams("name");
       Animal animal = new Animal(name);
       animal.save();
       int animalId = animal.getId();
 
+      // Instantiate EndangeredAnimal with additional form inputs specific to the subclass constructor.
       String health = request.queryParams("health");
       String age = request.queryParams("age");
       EndangeredAnimal endangeredAnimal = new EndangeredAnimal(name, health, age);
       endangeredAnimal.save();
       int endangeredAnimalId = endangeredAnimal.getId();
 
-      // what is "id", id used for again??
+      // what is "id", id used for again???
       model.put("animalId", animalId);
       model.put("endangeredAnimalId", endangeredAnimalId);
 
+      // Success message posts to / immediately upon adding an Animal.
       model.put("success-add", animal.getName());
 
+      // All Animals and Endangered Animals are needed here why???
       model.put("animals", Animal.all());
       model.put("endangeredAnimals", EndangeredAnimal.getEndangeredAnimals());
+
+      // contant options from EndangeredAnimal class that are used as inputs here. Feels convoluted, but I see that they can be used to ensure very strict options are used for the front end dictacted by the backend.
+      model.put("Poor", EndangeredAnimal.POOR_HEALTH);
+      model.put("Ok", EndangeredAnimal.OK_HEALTH);
+      model.put("Good", EndangeredAnimal.GOOD_HEALTH);
+      model.put("Newborn", EndangeredAnimal.NEWBORN);
+      model.put("Young", EndangeredAnimal.YOUNG);
+      model.put("Adult", EndangeredAnimal.ADULT);
+
+      
 
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
@@ -52,15 +67,13 @@ public class App {
 
 // -----------------------------------------------------------------------------------------------
 
-    get("/animal/:id/sighting/new", (request, response) -> {
+    // This is the animal-form whose info is posted to the Homepage.
+    get("/animal/new", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
-      Animal animal  = Animal.find(Integer.parseInt(request.params("id")));
-      model.put("animal", animal);
-
-      // may not need this
-      model.put("sightings", animal.getSpeciesSpecificSightings());
-
-      model.put("template", "templates/sighting-form.vtl");
+      // Animal.all and EndangeredAnimal.all are here so that the ranger can see if their animal has already been added.
+      model.put("animals", Animal.all());
+      model.put("endangeredAnimals", EndangeredAnimal.getEndangeredAnimals());
+      model.put("template", "templates/animal-form.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -76,8 +89,8 @@ public class App {
 
 // -----------------------------------------------------------------------------------------------
 
-    // posts from sighting/new or sighting-form.vtl
-    post("/animal/:id/sighting/new", (request, response) -> {
+    // posts sighting form on the Homepage.
+    post("/", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       String rangerName = request.queryParams("rangerName");
       String animalName = request.queryParams("animalName");
