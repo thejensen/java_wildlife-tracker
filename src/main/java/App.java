@@ -37,7 +37,10 @@ public class App {
       model.put("sighting", sighting);
       // required for Animal selector in sighting form...maybe?
       model.put("animals", Animal.all());
-      // Success message posts to / immediately upon adding an Animal.
+      // used for success message.
+      String animal = Animal.find(animalIdSelected).getName();
+      model.put("animal", animal);
+      // Success message posts to / immediately upon adding an Animal, but we go to success.vtl after posting.
       model.put("template", "templates/success.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());

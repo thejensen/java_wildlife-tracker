@@ -74,7 +74,7 @@ public class SightingTest {
     testSighting.save();
     Timestamp savedSightingTime = Sighting.find(testSighting.getId()).getTimeSighted();
     Timestamp rightNow = new Timestamp(new Date().getTime());
-    assertEquals(DateFormat.getDateTimeInstance().format(rightNow), DateFormat.getDateTimeInstance().format(savedSightingTime));
+    assertEquals(rightNow.getDay(), savedSightingTime.getDay());
   }
 
   @Test

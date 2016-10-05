@@ -1,49 +1,62 @@
 <h1>Report a Sighting</h1>
-
+<hr>
+<p>
+The Forest Service is considering a proposal from a timber company to clearcut a nearby forest of Douglas Fir. Before this proposal may be approved, they must complete an environmental impact study. Use this page to track wildlife sightings in the area.
+</p>
+<hr>
 <form action="/" method="post">
-  <label for="animalSelected">Select Animal Sighted</label>
-  <select class="form-control" name="animalSelected">
-    #foreach($animal in $animals)
-      <option value="$animal.getId()">$animal.getName() | Is Endangered: $animal.isEndangered()</option>
-    #end
-  </select>
-  <p>New Animal Sighted? <a href="/animal/new">Add Animal to Database</a></p>
-  <br>
-  <label for="latLong">Latitute and Longitude Coordinates of Sighting</label>
-  <br>
-  <input type="text" name="latLong">
-  <br><br>
-  <label for="rangerName">Your Name</label>
-  <br>
-  <input type="text" name="rangerName">
+  <div class="row">
+    <div class="col-xs-6">
+      <label for="latLong">Latitute &amp; Longitute</label><br>
+      <input type="text" name="latLong" required><br>
+      <label for="rangerName">Your Name</label><br>
+      <input type="text" name="rangerName" required>
+    </div>
+    <div class="col-xs-6">
+      <label for="animalSelected">Select Animal Sighted</label>
+      <select class="form-control" name="animalSelected">
+        #foreach($animal in $animals)
+          <option value="$animal.getId()">$animal.getName() | Endangered: $animal.isEndangered()</option>
+        #end
+      </select>
+      <p>New Animal Sighted? <a href="/animal/new">Add Animal to Database</a></p>
+    </div>
+  </div>
   <button type="submit" class="btn btn-primary">Submit Report</button>
 </form>
 <hr>
 
 <div class="row">
-  <h3>Recent Endangered Animal Sightings</h3>
-  #foreach ($endangeredAnimal in $endangeredAnimals)
-    <div class="col-xs-6 col-md-3">
-      <a href="/animal/$endangeredAnimal.getId()" class="thumbnail">
-        <h4>$endangeredAnimal.getName()</h4>
-        <h4>$endangeredAnimal.getSpeciesSpecificSightings().size() Reported Sightings</h4>
-        <p>Click for details</p>
-      </a>
-    </div>
+  <h3>Endangered Animal Sightings</h3>
+  #if ($endangeredAnimals.size() == 0)
+    <a href="/animal/new">Add Animal to Database to Report a Sighting</a>
+  #else
+    #foreach ($endangeredAnimal in $endangeredAnimals)
+      <div class="col-xs-6 col-md-3">
+        <a href="/animal/$endangeredAnimal.getId()" class="thumbnail">
+          <h4>$endangeredAnimal.getName()</h4>
+          <h4>$endangeredAnimal.getSpeciesSpecificSightings().size() Reported Sightings</h4>
+          <p>Click for details</p>
+        </a>
+      </div>
+    #end
   #end
 </div>
+<hr>
 
 <div class="row">
   <h3>All Sightings</h3>
-  #foreach ($animal in $animals)
-    <div class="col-xs-6 col-md-3">
-      <a href="/animal/$animal.getId()" class="thumbnail">
-        <h4>$animal.getName()</h4>
-        #if($animal.getSpeciesSpecificSightings().size()>0)
-          <h4>$animal.getSpeciesSpecificSightings().size() Reported Sightings</h4>
-        #end
-        <p>Click for details</p>
-      </a>
-    </div>
+  #if ($endangeredAnimals.size() == 0)
+    <a href="/animal/new">Add Animal to Database to Report a Sighting</a>
+  #else
+    #foreach ($animal in $animals)
+      <div class="col-xs-6 col-md-3">
+        <a href="/animal/$animal.getId()" class="thumbnail">
+          <h4>$animal.getName()</h4>
+          <h4>$animal.getSpeciesSpecificSightings().size() Reported Sighting(s)</h4>
+          <p>Click for details</p>
+        </a>
+      </div>
+    #end
   #end
 </div>

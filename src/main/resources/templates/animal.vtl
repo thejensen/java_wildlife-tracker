@@ -5,13 +5,17 @@
 <h3>Database ID: $animal.getId()</h3>
 <hr>
 <div class="row">
-  #foreach($sighting in $animal.getSpeciesSpecificSightings())
-  <ul>
-    <li>Date and Time of Sighting: <strong>$sighting.getTimeSighted()</strong></li>
-    <li>Location: <strong>$sighting.getLatLong()</strong></li>
-    <li>Reported by: <strong>$sighting.getRangerName()</strong></li>
-    <li>Sighting Database ID: <strong>$sighting.getId()</strong></li>
-  </ul>
-  <hr>
+  #if($animal.getSpeciesSpecificSightings().size() == 0)
+    <p>To report a sighting, go <a href="/">Home</a> &amp; use the Report a Sighting form.</p>
+  #else
+    #foreach($sighting in $animal.getSpeciesSpecificSightings())
+    <ul>
+      <li>Date and Time of Sighting: <strong>$sighting.getTimeSighted()</strong></li>
+      <li>Location: <strong>$sighting.getLatLong()</strong></li>
+      <li>Reported by: <strong>$sighting.getRangerName()</strong></li>
+      <li>Sighting Database ID: <strong>$sighting.getId()</strong></li>
+    </ul>
+    <hr>
+    #end
   #end
 </div>

@@ -5,16 +5,11 @@
 <form action="/animal/new" method="post">
   <button type="submit" class="btn btn-primary">Add Animal</button>
   <hr>
-  <label for="name">Animal Species</label>
-  <br>
-  <input type="text" name="name">
-  $error
-  <br>
+  <label for="name">Animal Species</label><br>
+  <input type="text" name="name" required>
   <label for="endangered">Check if Endangered</label>
   <input type="checkbox" name="endangered">
-  <br>
   <hr>
-  <br>
   <div class="reveal-if-active">
     <h3>Additional information about endangered animal:</h3>
     <label for="health">Appearance of Health</label>
@@ -31,5 +26,4 @@
       <option>$Adult</option>
     </select>
   </div>
-  <br>
 </form>
