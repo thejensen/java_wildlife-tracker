@@ -22,22 +22,15 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-// -----------------------------------------------------------------------------------------------
+// --------------------------------------------------------------
 
-    // Post request for Homepage, Info posts from /animal/new, also posts from Homepage form.
+    // Post request for success, which goes to homepage, Info posts from /animal/new, also posts from Homepage form.
     post("/", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       // Report a sighting form on /
       String rangerName = request.queryParams("rangerName");
       int animalIdSelected = Integer.parseInt(request.queryParams("animalSelected"));
       String latLong = request.queryParams("latLong");
-        try {
-          if(rangerName.equals("")) {
-            throw new UnsupportedOperationException("Missing Input");
-          }
-        } catch (java.lang.UnsupportedOperationException e) {
-          model.put("error", "Please enter your name for the record.");
-        }
       // Instantiates new sighting.
       Sighting sighting = new Sighting(animalIdSelected, latLong, rangerName);
       sighting.save();
@@ -45,13 +38,11 @@ public class App {
       // required for Animal selector in sighting form...maybe?
       model.put("animals", Animal.all());
       // Success message posts to / immediately upon adding an Animal.
-      model.put("success-add", Animal.find(animalIdSelected).getName());
-      model.put("template", "templates/index.vtl");
+      model.put("template", "templates/success.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-// -----------------------------------------------------------------------------------------------
-
+// --------------------------------------------------------------
     // This is the animal-form whose info is posted to the Homepage.
     get("/animal/new", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
@@ -82,20 +73,24 @@ public class App {
             if(name.equals("")) {
               throw new UnsupportedOperationException("Missing Input");
             }
-          } catch (java.lang.UnsupportedOperationException e) {
+          } catch (java.lang.UnsupportedOperationException exception) {
             model.put("error", "Please enter the animal name. It's worth it!");
           }
-        String errorMessage = "All Required Fields must be entered to proceed";
         String health = request.queryParams("health");
         String age = request.queryParams("age");
         EndangeredAnimal endangeredAnimal = new EndangeredAnimal(name, health, age);
         endangeredAnimal.save();
+        model.put("animals", Animal.all());
+        model.put("endangeredAnimals", EndangeredAnimal.getEndangeredAnimals());
       } else {
         // instantiate Animal with form inputs for the superclass constructor.
         String name = request.queryParams("name");
         Animal animal = new Animal(name);
         animal.save();
+        model.put("animals", Animal.all());
+        model.put("endangeredAnimals", EndangeredAnimal.getEndangeredAnimals());
       }
+
       // because there wooould be multiple post requests to / the way I've set this up, let's post to animal/new and redirect to /.
       response.redirect("/");
         return null;
@@ -106,88 +101,9 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       Animal animal = Animal.find(Integer.parseInt(request.params("id")));
       model.put("animal", animal);
-      model.put("template", "templates/index.vtl");
+      model.put("template", "templates/animal.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-
-// -----------------------------------------------------------------------------------------------
-
-    get("/endangered-animal/:id", (request, response) -> {
-      Map<String, Object> model = new HashMap<String, Object>();
-      EndangeredAnimal endangeredAnimal = EndangeredAnimal.find(Integer.parseInt(request.params("id")));
-      model.put("endangeredAnimal", endangeredAnimal);
-      model.put("template", "templates/index.vtl");
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
-
-    // get("/sighting/:id/update", (request, response) -> {
-    //   Map<String, Object> model = new HashMap<String, Object>();
-    //   Sighting sighting  = Sighting.find(Integer.parseInt(request.params("id")));
-    //   Sighting sighting = Sighting.find(sighting.getSightingId());
-    //   model.put("sightings", Sighting.all());
-    //   model.put("sighting", sighting);
-    //   model.put("sighting", sighting);
-    //   model.put("template", "templates/sighting-update.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
-    //
-    //
-    // post("/sighting/:id/update", (request, response) -> {
-    //   Map<String, Object> model = new HashMap<String, Object>();
-    //   Sighting sighting = Sighting.find(Integer.parseInt(request.params("id")));
-    //   String endangered = request.queryParams("endangered");
-    //   String name = request.queryParams("name");
-    //   int sightingId = Integer.parseInt(request.queryParams("sightingId"));
-    //   Sighting sighting = Sighting.find(sighting.getSightingId());
-    //   sighting.updateDescription(endangered);
-    //   sighting.updateName(name);
-    //   sighting.updateSighting(sightingId);
-    //   String url = String.format("/sighting/%d", sightingId);
-    //   response.redirect(url);
-    //   return null;
-    // });
-    //
-    //
-    // post("/sighting/:sighting_id/sighting/:id/delete", (request, response) -> {
-    //   Map<String, Object> model = new HashMap<String, Object>();
-    //   Sighting sighting = Sighting.find(Integer.parseInt(request.params("id")));
-    //   Sighting sighting = Sighting.find(sighting.getSightingId());
-    //   // model.put("success-delete", sighting.getName());
-    //   sighting.delete();
-    //   String url = String.format("/");
-    //   response.redirect(url);
-    //   return null;
-    // });
-
-    // get("/animal/:id/update", (request, response) -> {
-    //   Map<String, Object> model = new HashMap<String, Object>();
-    //   Animal animal  = Animal.find(Integer.parseInt(request.params("id")));
-    //   model.put("animal", animal);
-    //   model.put("template", "templates/animal-update.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
-    //
-    // post("/animal/:id/update", (request, response) -> {
-    //   Map<String, Object> model = new HashMap<String, Object>();
-    //   Animal animal = Animal.find(Integer.parseInt(request.params("id")));
-    //   String endangered = request.queryParams("endangered");
-    //   animal.updateDescription(endangered);
-    //   String name = request.queryParams("name");
-    //   animal.updateName(name);
-    //   model.put("success-edit", animal.getName());
-    //   String url = String.format("/animal/%d", animal.getId());
-    //   response.redirect(url);
-    //   return null;
-    // });
-    //
-    // post("/animal/:id/delete", (request, response) -> {
-    //   Map<String, Object> model = new HashMap<String, Object>();
-    //   Animal animal = Animal.find(Integer.parseInt(request.params("id")));
-    //   animal.delete();
-    //   String url = String.format("/");
-    //   response.redirect(url);
-    //   return null;
-    // });
   }
 }

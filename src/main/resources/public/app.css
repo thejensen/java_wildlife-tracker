@@ -13,3 +13,7 @@ input[type="checkbox"]:checked ~ .reveal-if-active {
   max-height: 100px;
   overflow: visible;
 }
+
+li {
+  list-style: none;
+}

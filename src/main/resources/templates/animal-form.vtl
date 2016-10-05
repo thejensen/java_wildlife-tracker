@@ -1,8 +1,14 @@
+<h4><a href="/">Home</a></h4>
+<hr>
 <h1>Add Animal</h1>
 
 <form action="/animal/new" method="post">
+  <button type="submit" class="btn btn-primary">Add Animal</button>
+  <hr>
   <label for="name">Animal Species</label>
-  <input type="text" name="name" required>
+  <br>
+  <input type="text" name="name">
+  $error
   <br>
   <label for="endangered">Check if Endangered</label>
   <input type="checkbox" name="endangered">
@@ -26,5 +32,4 @@
     </select>
   </div>
   <br>
-  <button type="submit" class="btn btn-primary">Add Animal</button>
 </form>

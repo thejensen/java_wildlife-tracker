@@ -1,53 +1,49 @@
-<!-- /*#if($success-add)
-  <div class="alert alert-success alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    The $success-add's details have been added. Keep up the good work.
-  </div>
-#end*/ -->
-
 <h1>Report a Sighting</h1>
 
 <form action="/" method="post">
   <label for="animalSelected">Select Animal Sighted</label>
   <select class="form-control" name="animalSelected">
     #foreach($animal in $animals)
-      <option value="$animal.getId()">$animal.getName()</option>
+      <option value="$animal.getId()">$animal.getName() | Is Endangered: $animal.isEndangered()</option>
     #end
   </select>
-  <p>New Animal Sighted? <a href="/animal/new">Add Animal to Database.</a></p>
+  <p>New Animal Sighted? <a href="/animal/new">Add Animal to Database</a></p>
   <br>
   <label for="latLong">Latitute and Longitude Coordinates of Sighting</label>
+  <br>
   <input type="text" name="latLong">
-  <br>
+  <br><br>
   <label for="rangerName">Your Name</label>
-  <input type="text" name="rangerName">
   <br>
+  <input type="text" name="rangerName">
   <button type="submit" class="btn btn-primary">Submit Report</button>
 </form>
 <hr>
 
-<h3>Recent Endangered Animal Sightings</h3>
-#foreach ($endangeredAnimal in $endangeredAnimals)
-  <div class="col-xs-6 col-md-3">
-    <a href="/animal/$endangeredAnimal.getId()" class="thumbnail">
-      <h4>$endangeredAnimal.getName()</h4>
-      #if($endangeredAnimal.getSpeciesSpecificSightings().size()>0)
+<div class="row">
+  <h3>Recent Endangered Animal Sightings</h3>
+  #foreach ($endangeredAnimal in $endangeredAnimals)
+    <div class="col-xs-6 col-md-3">
+      <a href="/animal/$endangeredAnimal.getId()" class="thumbnail">
+        <h4>$endangeredAnimal.getName()</h4>
         <h4>$endangeredAnimal.getSpeciesSpecificSightings().size() Reported Sightings</h4>
-      #end
-      <p>Click for details</p>
-    </a>
-  </div>
-#end
+        <p>Click for details</p>
+      </a>
+    </div>
+  #end
+</div>
 
-<h3>All Sightings</h3>
-#foreach ($animal in $animals)
-  <div class="col-xs-6 col-md-3">
-    <a href="/animal/$animal.getId()" class="thumbnail">
-      <h4>$animal.getName()</h4>
-      #if($animal.getSpeciesSpecificSightings().size()>0)
-        <h4>$animal.getSpeciesSpecificSightings().size() Reported Sightings</h4>
-      #end
-      <p>Click for details</p>
-    </a>
-  </div>
-#end
+<div class="row">
+  <h3>All Sightings</h3>
+  #foreach ($animal in $animals)
+    <div class="col-xs-6 col-md-3">
+      <a href="/animal/$animal.getId()" class="thumbnail">
+        <h4>$animal.getName()</h4>
+        #if($animal.getSpeciesSpecificSightings().size()>0)
+          <h4>$animal.getSpeciesSpecificSightings().size() Reported Sightings</h4>
+        #end
+        <p>Click for details</p>
+      </a>
+    </div>
+  #end
+</div>
