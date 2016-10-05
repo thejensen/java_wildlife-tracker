@@ -1,30 +1,30 @@
-<h1>Add a Animal</h1>
+<h1>Add Animal</h1>
 
-<form action="/" method="post">
+<form action="/animal/new" method="post">
   <label for="name">Animal Species</label>
   <input type="text" name="name" required>
   <br>
-
-  <label for="endangered">Endangered Status</label>
-  <select class="form-control" name="endangered">
-    <option>True</option>
-    <option>False</option>
-  </select>
+  <label for="endangered">Check if Endangered</label>
+  <input type="checkbox" name="endangered" value="true">
   <br>
-
-  <label for="health">Appearance of Health</label>
-  <select class="form-control" name="health">
-    <option>$POOR_HEALTH</option>
-    <option>$OK_HEALTH</option>
-    <option>$GOOD_HEALTH</option>
-  </select>
-
-  <label for="age">Approximate Age</label>
-  <select class="form-control" name="age">
-    <option>$NEWBORN</option>
-    <option>$YOUNG</option>
-    <option>$ADULT</option>
-  </select>
-
+  <hr>
+  <br>
+  <div class="reveal-if-active">
+    <h3>Additional information about endangered animal:</h3>
+    <label for="health">Appearance of Health</label>
+    <select class="form-control" name="health">
+      <option>$Poor</option>
+      <option>$Ok</option>
+      <option>$Good</option>
+    </select>
+    <br>
+    <label for="age">Approximate Age</label>
+    <select class="form-control" name="age">
+      <option>$Newborn</option>
+      <option>$Young</option>
+      <option>$Adult</option>
+    </select>
+  </div>
+  <br>
   <button type="submit" class="btn btn-primary">Add Animal</button>
 </form>

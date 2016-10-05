@@ -6,12 +6,12 @@ public class EndangeredAnimal extends Animal {
   private String health;
   private String age;
 
-  public static final String POOR_HEALTH = "ill";
-  public static final String OK_HEALTH = "ok";
-  public static final String GOOD_HEALTH = "healthy";
-  public static final String NEWBORN = "newborn";
-  public static final String YOUNG = "young";
-  public static final String ADULT = "adult";
+  public static final String POOR_HEALTH = "Ill";
+  public static final String OK_HEALTH = "OK";
+  public static final String GOOD_HEALTH = "Healthy";
+  public static final String NEWBORN = "Newborn";
+  public static final String YOUNG = "Young";
+  public static final String ADULT = "Adult";
 
   public EndangeredAnimal(String name, String health, String age) {
     super(name);

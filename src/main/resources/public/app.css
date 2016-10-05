@@ -1,0 +1,15 @@
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+.reveal-if-active {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+}
+
+input[type="checkbox"]:checked ~ .reveal-if-active {
+  opacity: 1;
+  max-height: 100px;
+  overflow: visible;
+}

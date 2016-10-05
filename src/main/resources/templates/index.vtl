@@ -5,25 +5,12 @@
   </div>
 #end
 
-<h3><a href="/animal/new">Add New Animal To Report a Sighting</a></h3>
-
-<h1>Recent Endangered Animal Sightings</h1>
-#foreach ($endangeredAnimal in $endangeredAnimals)
-  <div class="col-xs-6 col-md-3">
-    <a href="/animal/$endangeredAnimal.getId()" class="thumbnail">
-      <h4>$endangeredAnimal.getName()</h4>
-      <h4>$endangeredAnimal.getSpeciesSpecificSightings()()</h4>
-    </a>
-  </div>
-#end
-<hr>
-
 <h1>Report a Sighting</h1>
 <form action="/" method="post">
-  <label for="animal">Select Animal Sighted</label>
-  <select class="form-control" name="health">
+  <label for="animalSelected">Select Animal Sighted</label>
+  <select class="form-control" name="animalSelected">
     #foreach($animal in $animals)
-      <option>$animal</option>
+      <option value="$animal.getId()">$animal</option>
     #end
   </select>
   <p>Unique animal sighting? <a href="/animal/new">Add Animal to Database.</a></p>
@@ -34,7 +21,15 @@
   <label for="rangerName">Appearance of Health</label>
   <input type="text" name="rangerName">
   <br>
-  <button type="submit" class="btn btn-primary">Add Animal</button>
+  <button type="submit" class="btn btn-primary">Submit Report</button>
 </form>
-
 <hr>
+<h1>Recent Endangered Animal Sightings</h1>
+#foreach ($endangeredAnimal in $endangeredAnimals)
+  <div class="col-xs-6 col-md-3">
+    <a href="/animal/$endangeredAnimal.getId()" class="thumbnail">
+      <h4>$endangeredAnimal.getName()</h4>
+      <h4>$endangeredAnimal.getSpeciesSpecificSightings()()</h4>
+    </a>
+  </div>
+#end
