@@ -17,6 +17,7 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("animals", Animal.all());
       model.put("endangeredAnimals", EndangeredAnimal.getEndangeredAnimals());
+      model.put("sightings", Sighting.all());
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -28,8 +29,15 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       // Report a sighting form on /
       String rangerName = request.queryParams("rangerName");
-      Integer animalIdSelected = Integer.parseInt(request.queryParams("animalIdSelected"));
+      int animalIdSelected = Integer.parseInt(request.queryParams("animalSelected"));
       String latLong = request.queryParams("latLong");
+        try {
+          if(rangerName.equals("")) {
+            throw new UnsupportedOperationException("Missing Input");
+          }
+        } catch (java.lang.UnsupportedOperationException e) {
+          model.put("error", "Please enter your name for the record.");
+        }
       // Instantiates new sighting.
       Sighting sighting = new Sighting(animalIdSelected, latLong, rangerName);
       sighting.save();
@@ -70,34 +78,48 @@ public class App {
       if (endangered) {
         // Instantiate EndangeredAnimal with additional form inputs specific to the subclass constructor.
         String name = request.queryParams("name");
+          try {
+            if(name.equals("")) {
+              throw new UnsupportedOperationException("Missing Input");
+            }
+          } catch (java.lang.UnsupportedOperationException e) {
+            model.put("error", "Please enter the animal name. It's worth it!");
+          }
+        String errorMessage = "All Required Fields must be entered to proceed";
         String health = request.queryParams("health");
         String age = request.queryParams("age");
         EndangeredAnimal endangeredAnimal = new EndangeredAnimal(name, health, age);
         endangeredAnimal.save();
-        int endangeredAnimalId = endangeredAnimal.getId();
       } else {
         // instantiate Animal with form inputs for the superclass constructor.
         String name = request.queryParams("name");
         Animal animal = new Animal(name);
         animal.save();
-        int animalId = animal.getId();
       }
       // because there wooould be multiple post requests to / the way I've set this up, let's post to animal/new and redirect to /.
       response.redirect("/");
-          return null;
+        return null;
       });
 // -----------------------------------------------------------------------------------------------
 
-    get("/sightings", (request, response) -> {
+    get("/animal/:id", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
-      model.put("animals", Animal.all());
-      model.put("endangeredAnimals", EndangeredAnimal.getEndangeredAnimals());
+      Animal animal = Animal.find(Integer.parseInt(request.params("id")));
+      model.put("animal", animal);
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
 
 // -----------------------------------------------------------------------------------------------
+
+    get("/endangered-animal/:id", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      EndangeredAnimal endangeredAnimal = EndangeredAnimal.find(Integer.parseInt(request.params("id")));
+      model.put("endangeredAnimal", endangeredAnimal);
+      model.put("template", "templates/index.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
 
     // get("/sighting/:id/update", (request, response) -> {
     //   Map<String, Object> model = new HashMap<String, Object>();
