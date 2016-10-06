@@ -87,15 +87,4 @@ public class AnimalTest {
     assertTrue(Animal.find(999) == null);
   }
 
-  // @Test
-  // public void delete_deletesAllAnimalsAndSightingAssoc() {
-  //  Sighting testSighting = new Sighting(testAnimal.getId(), "45.523062, -122.676482", "Ranger Jen");
-  //   testSighting.save();
-  //   Animal testAnimal = new Animal("Baloo");
-  //   testAnimal.save();
-  //   testSighting.addAnimal(testAnimal);
-  //   testAnimal.delete();
-  //   assertEquals(0, testSighting.getAnimals().size());
-  // }
-
 }

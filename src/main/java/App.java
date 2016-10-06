@@ -31,6 +31,10 @@ public class App {
       String rangerName = request.queryParams("rangerName");
       int animalIdSelected = Integer.parseInt(request.queryParams("animalSelected"));
       String latLong = request.queryParams("latLong");
+      if(rangerName.equals("") || latLong.equals("")) {
+        response.redirect(String.format("/try-again"));
+        throw new UnsupportedOperationException("Please fill out your name and the location of the sighting.");
+      }
       // Instantiates new sighting.
       Sighting sighting = new Sighting(animalIdSelected, latLong, rangerName);
       sighting.save();
@@ -72,15 +76,12 @@ public class App {
       if (endangered) {
         // Instantiate EndangeredAnimal with additional form inputs specific to the subclass constructor.
         String name = request.queryParams("name");
-          try {
-            if(name.equals("")) {
-              throw new UnsupportedOperationException("Missing Input");
-            }
-          } catch (java.lang.UnsupportedOperationException exception) {
-            model.put("error", "Please enter the animal name. It's worth it!");
-          }
         String health = request.queryParams("health");
         String age = request.queryParams("age");
+        if(name.equals("")) {
+          response.redirect(String.format("/try-again"));
+          throw new UnsupportedOperationException("Please fill out the animal's name, health and age.");
+        }
         EndangeredAnimal endangeredAnimal = new EndangeredAnimal(name, health, age);
         endangeredAnimal.save();
         model.put("animals", Animal.all());
@@ -88,6 +89,10 @@ public class App {
       } else {
         // instantiate Animal with form inputs for the superclass constructor.
         String name = request.queryParams("name");
+        if(name.equals("")) {
+          response.redirect(String.format("/try-again"));
+          throw new UnsupportedOperationException("Please fill out the animal's name.");
+        }
         Animal animal = new Animal(name);
         animal.save();
         model.put("animals", Animal.all());
@@ -98,15 +103,25 @@ public class App {
       response.redirect("/");
         return null;
       });
+
 // -----------------------------------------------------------------------------------------------
 
     get("/animal/:id", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Animal animal = Animal.find(Integer.parseInt(request.params("id")));
+      EndangeredAnimal endangeredAnimal = EndangeredAnimal.findEndangeredAnimal(Integer.parseInt(request.params("id")));
       model.put("animal", animal);
+      model.put("endangeredAnimal", endangeredAnimal);
       model.put("template", "templates/animal.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+// -----------------------------------------------------------------------------------------------
+
+    get("/try-again", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("template", "templates/try-again.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
   }
 }

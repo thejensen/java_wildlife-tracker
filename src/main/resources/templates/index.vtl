@@ -1,4 +1,4 @@
-<h1>Report a Sighting</h1>
+<h1>Report a Wildlife Sighting</h1>
 <hr>
 <p>
 The Forest Service is considering a proposal from a timber company to clearcut a nearby forest of Douglas Fir. Before this proposal may be approved, they must complete an environmental impact study. Use this page to track wildlife sightings in the area.
@@ -7,12 +7,6 @@ The Forest Service is considering a proposal from a timber company to clearcut a
 <form action="/" method="post">
   <div class="row">
     <div class="col-xs-6">
-      <label for="latLong">Latitute &amp; Longitute</label><br>
-      <input type="text" name="latLong" required><br>
-      <label for="rangerName">Your Name</label><br>
-      <input type="text" name="rangerName" required>
-    </div>
-    <div class="col-xs-6">
       <label for="animalSelected">Select Animal Sighted</label>
       <select class="form-control" name="animalSelected">
         #foreach($animal in $animals)
@@ -20,6 +14,12 @@ The Forest Service is considering a proposal from a timber company to clearcut a
         #end
       </select>
       <p>New Animal Sighted? <a href="/animal/new">Add Animal to Database</a></p>
+    </div>
+    <div class="col-xs-6">
+      <label for="latLong">Latitute &amp; Longitute</label><br>
+      <input type="text" name="latLong"><br>
+      <label for="rangerName">Your Name</label><br>
+      <input type="text" name="rangerName">
     </div>
   </div>
   <button type="submit" class="btn btn-primary">Submit Report</button>
@@ -35,7 +35,7 @@ The Forest Service is considering a proposal from a timber company to clearcut a
       <div class="col-xs-6 col-md-3">
         <a href="/animal/$endangeredAnimal.getId()" class="thumbnail">
           <h4>$endangeredAnimal.getName()</h4>
-          <h4>$endangeredAnimal.getSpeciesSpecificSightings().size() Reported Sightings</h4>
+          <h4>$endangeredAnimal.getSpeciesSpecificSightings().size() Reported Sighting(s)</h4>
           <p>Click for details</p>
         </a>
       </div>

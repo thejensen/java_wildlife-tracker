@@ -17,3 +17,7 @@ input[type="checkbox"]:checked ~ .reveal-if-active {
 li {
   list-style: none;
 }
+
+button {
+  float: right;
+}
