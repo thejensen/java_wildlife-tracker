@@ -24,7 +24,7 @@ _Next, recreate the hair-salon database in PSQL:_
 * _\c wildlife_tracker_
 * _CREATE TABLE animals (id serial PRIMARY KEY, name varchar, endangered boolean, health varchar, age varchar);_
 * _CREATE TABLE sightings (id serial PRIMARY KEY, animal_id int, lat_long varchar, ranger_name varchar, time_sighted timestamp);_
-* _CREATE DATABASE wildlife_tracker_test WITH TEMPLATE wildlife_tracker;
+* _CREATE DATABASE wildlife_tracker_test WITH TEMPLATE wildlife_tracker;_
 
 _Finally, we can run the app by..._
 * _In a new terminal tab (or "ctrl c" out of psql) execute $gradle run_
