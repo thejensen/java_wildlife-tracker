@@ -5,6 +5,8 @@ The Forest Service is considering a proposal from a timber company to clearcut a
 </p>
 <hr>
 <form action="/" method="post">
+  <p>New Animal Sighted? <a href="/animal/new">Add Animal to Database</a></p>
+  #if($animals.size() >= 1)
   <div class="row">
     <div class="col-xs-6">
       <label for="animalSelected">Select Animal Sighted</label>
@@ -13,7 +15,6 @@ The Forest Service is considering a proposal from a timber company to clearcut a
           <option value="$animal.getId()">$animal.getName() | Endangered: $animal.isEndangered()</option>
         #end
       </select>
-      <p>New Animal Sighted? <a href="/animal/new">Add Animal to Database</a></p>
     </div>
     <div class="col-xs-6">
       <label for="latLong">Latitute &amp; Longitute</label><br>
@@ -23,6 +24,7 @@ The Forest Service is considering a proposal from a timber company to clearcut a
     </div>
   </div>
   <button type="submit" class="btn btn-primary">Submit Report</button>
+  #end
 </form>
 <hr>
 

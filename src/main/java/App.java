@@ -33,7 +33,7 @@ public class App {
       String latLong = request.queryParams("latLong");
       if(rangerName.equals("") || latLong.equals("")) {
         response.redirect(String.format("/try-again"));
-        throw new UnsupportedOperationException("Please fill out your name and the location of the sighting.");
+        throw new UnsupportedOperationException("Please add an animal, fill out your name, and the location of the sighting.");
       }
       // Instantiates new sighting.
       Sighting sighting = new Sighting(animalIdSelected, latLong, rangerName);
